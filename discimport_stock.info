@@ -1,0 +1,11 @@
+name = Discimport Stock
+core = 7.x
+package = Discimport
+version = 7.x-1.0
+dependencies[] = editableviews
+dependencies[] = views
+features[ctools][] = views:views_default:3.0
+features[features_api][] = api:2
+features[views_view][] = out_of_stock
+features[views_view][] = product_stock_editor
+features_exclude[dependencies][ctools] = ctools

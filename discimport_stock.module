@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Discimport Stock feature.
+ */
+
+include_once 'discimport_stock.features.inc';
