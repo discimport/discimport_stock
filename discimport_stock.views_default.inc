@@ -307,6 +307,13 @@ function discimport_stock_views_default_views() {
   $handler->display->display_options['fields']['commerce_stock_editable']['widget_type'] = '0';
   $handler->display->display_options['fields']['commerce_stock_editable']['suppress_label'] = 0;
   $handler->display->display_options['fields']['commerce_stock_editable']['suppress_description'] = 0;
+  /* Field: Commerce Product: Title */
+  $handler->display->display_options['fields']['title_1']['id'] = 'title_1';
+  $handler->display->display_options['fields']['title_1']['table'] = 'commerce_product';
+  $handler->display->display_options['fields']['title_1']['field'] = 'title';
+  $handler->display->display_options['fields']['title_1']['relationship'] = 'field_product_product_id';
+  $handler->display->display_options['fields']['title_1']['label'] = 'Product title';
+  $handler->display->display_options['fields']['title_1']['link_to_product'] = 1;
   /* Field: Commerce Product: Delete link */
   $handler->display->display_options['fields']['delete_product']['id'] = 'delete_product';
   $handler->display->display_options['fields']['delete_product']['table'] = 'commerce_product';
@@ -359,10 +366,245 @@ function discimport_stock_views_default_views() {
     t('Plastic'),
     t('Weight'),
     t('Color'),
+    t('Product title'),
     t('Alle'),
     t('Page'),
   );
   $export['product_stock_editor'] = $view;
+
+  $view = new view();
+  $view->name = 'stock';
+  $view->description = '';
+  $view->tag = 'Discimport';
+  $view->base_table = 'commerce_product';
+  $view->human_name = 'Stock';
+  $view->core = 7;
+  $view->api_version = '3.0';
+  $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
+
+  /* Display: Master */
+  $handler = $view->new_display('default', 'Master', 'default');
+  $handler->display->display_options['title'] = 'Stock';
+  $handler->display->display_options['use_more_always'] = FALSE;
+  $handler->display->display_options['access']['type'] = 'role';
+  $handler->display->display_options['access']['role'] = array(
+    3 => '3',
+    4 => '4',
+  );
+  $handler->display->display_options['cache']['type'] = 'time';
+  $handler->display->display_options['cache']['results_lifespan'] = '300';
+  $handler->display->display_options['cache']['results_lifespan_custom'] = '0';
+  $handler->display->display_options['cache']['output_lifespan'] = '300';
+  $handler->display->display_options['cache']['output_lifespan_custom'] = '0';
+  $handler->display->display_options['query']['type'] = 'views_query';
+  $handler->display->display_options['exposed_form']['type'] = 'basic';
+  $handler->display->display_options['pager']['type'] = 'none';
+  $handler->display->display_options['pager']['options']['offset'] = '0';
+  $handler->display->display_options['style_plugin'] = 'table';
+  $handler->display->display_options['style_options']['columns'] = array(
+    'product_id' => 'product_id',
+    'sku' => 'sku',
+    'title' => 'title',
+    'commerce_stock' => 'commerce_stock',
+    'title_1' => 'title_1',
+  );
+  $handler->display->display_options['style_options']['default'] = '-1';
+  $handler->display->display_options['style_options']['info'] = array(
+    'product_id' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'sku' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'title' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'commerce_stock' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'title_1' => array(
+      'sortable' => 1,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+  );
+  /* Relationship: Commerce Product: Referencing Node */
+  $handler->display->display_options['relationships']['field_product']['id'] = 'field_product';
+  $handler->display->display_options['relationships']['field_product']['table'] = 'commerce_product';
+  $handler->display->display_options['relationships']['field_product']['field'] = 'field_product';
+  $handler->display->display_options['relationships']['field_product']['label'] = 'Indholdselement referencing products from field_product';
+  $handler->display->display_options['relationships']['field_product']['required'] = TRUE;
+  /* Field: Commerce Product: Product ID */
+  $handler->display->display_options['fields']['product_id']['id'] = 'product_id';
+  $handler->display->display_options['fields']['product_id']['table'] = 'commerce_product';
+  $handler->display->display_options['fields']['product_id']['field'] = 'product_id';
+  $handler->display->display_options['fields']['product_id']['label'] = 'Produkt-ID';
+  $handler->display->display_options['fields']['product_id']['link_to_product'] = 1;
+  /* Field: Commerce Product: SKU */
+  $handler->display->display_options['fields']['sku']['id'] = 'sku';
+  $handler->display->display_options['fields']['sku']['table'] = 'commerce_product';
+  $handler->display->display_options['fields']['sku']['field'] = 'sku';
+  $handler->display->display_options['fields']['sku']['link_to_product'] = 0;
+  /* Field: Commerce Product: Title */
+  $handler->display->display_options['fields']['title']['id'] = 'title';
+  $handler->display->display_options['fields']['title']['table'] = 'commerce_product';
+  $handler->display->display_options['fields']['title']['field'] = 'title';
+  $handler->display->display_options['fields']['title']['label'] = 'Titel';
+  $handler->display->display_options['fields']['title']['link_to_product'] = 0;
+  /* Field: Commerce Product: Stock (editable) */
+  $handler->display->display_options['fields']['commerce_stock_editable']['id'] = 'commerce_stock_editable';
+  $handler->display->display_options['fields']['commerce_stock_editable']['table'] = 'field_data_commerce_stock';
+  $handler->display->display_options['fields']['commerce_stock_editable']['field'] = 'commerce_stock_editable';
+  $handler->display->display_options['fields']['commerce_stock_editable']['label'] = 'Stock';
+  $handler->display->display_options['fields']['commerce_stock_editable']['settings'] = array(
+    'thousand_separator' => ' ',
+    'decimal_separator' => '.',
+    'scale' => '2',
+    'prefix_suffix' => 1,
+  );
+  $handler->display->display_options['fields']['commerce_stock_editable']['widget_type'] = '0';
+  $handler->display->display_options['fields']['commerce_stock_editable']['suppress_label'] = 1;
+  $handler->display->display_options['fields']['commerce_stock_editable']['suppress_description'] = 1;
+  /* Field: Commerce Product: Operations links */
+  $handler->display->display_options['fields']['operations']['id'] = 'operations';
+  $handler->display->display_options['fields']['operations']['table'] = 'commerce_product';
+  $handler->display->display_options['fields']['operations']['field'] = 'operations';
+  $handler->display->display_options['fields']['operations']['label'] = 'Redigeringslinks';
+  $handler->display->display_options['fields']['operations']['add_destination'] = 0;
+  /* Filter criterion: Commerce Product: Title */
+  $handler->display->display_options['filters']['title']['id'] = 'title';
+  $handler->display->display_options['filters']['title']['table'] = 'commerce_product';
+  $handler->display->display_options['filters']['title']['field'] = 'title';
+  $handler->display->display_options['filters']['title']['operator'] = 'contains';
+  $handler->display->display_options['filters']['title']['group'] = 1;
+  $handler->display->display_options['filters']['title']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['title']['expose']['operator_id'] = 'title_op';
+  $handler->display->display_options['filters']['title']['expose']['label'] = 'Titel';
+  $handler->display->display_options['filters']['title']['expose']['operator'] = 'title_op';
+  $handler->display->display_options['filters']['title']['expose']['identifier'] = 'title';
+  $handler->display->display_options['filters']['title']['expose']['remember_roles'] = array(
+    2 => '2',
+    1 => 0,
+    3 => 0,
+    4 => 0,
+  );
+  /* Filter criterion: Commerce Product: Status */
+  $handler->display->display_options['filters']['status']['id'] = 'status';
+  $handler->display->display_options['filters']['status']['table'] = 'commerce_product';
+  $handler->display->display_options['filters']['status']['field'] = 'status';
+  $handler->display->display_options['filters']['status']['value'] = '1';
+
+  /* Display: Page */
+  $handler = $view->new_display('page', 'Page', 'page');
+  $handler->display->display_options['defaults']['pager'] = FALSE;
+  $handler->display->display_options['pager']['type'] = 'full';
+  $handler->display->display_options['pager']['options']['items_per_page'] = '50';
+  $handler->display->display_options['pager']['options']['offset'] = '0';
+  $handler->display->display_options['pager']['options']['id'] = '0';
+  $handler->display->display_options['pager']['options']['quantity'] = '9';
+  $handler->display->display_options['pager']['options']['expose']['items_per_page_label'] = 'Antal elementer';
+  $handler->display->display_options['pager']['options']['expose']['items_per_page_options_all_label'] = '- Alle -';
+  $handler->display->display_options['pager']['options']['expose']['offset_label'] = 'Forskydning';
+  $handler->display->display_options['pager']['options']['tags']['first'] = '« første';
+  $handler->display->display_options['pager']['options']['tags']['previous'] = '‹ forrige';
+  $handler->display->display_options['pager']['options']['tags']['next'] = 'næste ›';
+  $handler->display->display_options['pager']['options']['tags']['last'] = 'sidste »';
+  $handler->display->display_options['path'] = 'admin/commerce/stock';
+
+  /* Display: Page */
+  $handler = $view->new_display('page', 'Page', 'page_1');
+  $handler->display->display_options['defaults']['group_by'] = FALSE;
+  $handler->display->display_options['defaults']['footer'] = FALSE;
+  $handler->display->display_options['defaults']['fields'] = FALSE;
+  /* Field: Commerce Product: Product ID */
+  $handler->display->display_options['fields']['product_id']['id'] = 'product_id';
+  $handler->display->display_options['fields']['product_id']['table'] = 'commerce_product';
+  $handler->display->display_options['fields']['product_id']['field'] = 'product_id';
+  $handler->display->display_options['fields']['product_id']['label'] = 'Produkt-ID';
+  $handler->display->display_options['fields']['product_id']['link_to_product'] = 1;
+  /* Field: Commerce Product: SKU */
+  $handler->display->display_options['fields']['sku']['id'] = 'sku';
+  $handler->display->display_options['fields']['sku']['table'] = 'commerce_product';
+  $handler->display->display_options['fields']['sku']['field'] = 'sku';
+  $handler->display->display_options['fields']['sku']['link_to_product'] = 0;
+  /* Field: Commerce Product: Title */
+  $handler->display->display_options['fields']['title']['id'] = 'title';
+  $handler->display->display_options['fields']['title']['table'] = 'commerce_product';
+  $handler->display->display_options['fields']['title']['field'] = 'title';
+  $handler->display->display_options['fields']['title']['label'] = 'Variation Title';
+  $handler->display->display_options['fields']['title']['link_to_product'] = 1;
+  /* Field: Commerce Product: Stock */
+  $handler->display->display_options['fields']['commerce_stock']['id'] = 'commerce_stock';
+  $handler->display->display_options['fields']['commerce_stock']['table'] = 'field_data_commerce_stock';
+  $handler->display->display_options['fields']['commerce_stock']['field'] = 'commerce_stock';
+  $handler->display->display_options['fields']['commerce_stock']['group_type'] = 'avg';
+  $handler->display->display_options['fields']['commerce_stock']['label'] = 'Lager';
+  $handler->display->display_options['fields']['commerce_stock']['settings'] = array(
+    'thousand_separator' => ' ',
+    'decimal_separator' => '.',
+    'scale' => '2',
+    'prefix_suffix' => 1,
+  );
+  $handler->display->display_options['fields']['commerce_stock']['group_columns'] = array(
+    'bundle' => 'bundle',
+  );
+  /* Field: Content: Title */
+  $handler->display->display_options['fields']['title_1']['id'] = 'title_1';
+  $handler->display->display_options['fields']['title_1']['table'] = 'node';
+  $handler->display->display_options['fields']['title_1']['field'] = 'title';
+  $handler->display->display_options['fields']['title_1']['relationship'] = 'field_product';
+  $handler->display->display_options['fields']['title_1']['label'] = 'Titel';
+  $handler->display->display_options['path'] = 'admin/commerce/stock_agg';
+  $handler->display->display_options['menu']['type'] = 'normal';
+  $handler->display->display_options['menu']['title'] = 'Stock';
+  $handler->display->display_options['menu']['weight'] = '0';
+  $handler->display->display_options['menu']['name'] = 'management';
+  $handler->display->display_options['menu']['context'] = 0;
+  $handler->display->display_options['menu']['context_only_inline'] = 0;
+  $translatables['stock'] = array(
+    t('Master'),
+    t('Stock'),
+    t('more'),
+    t('Apply'),
+    t('Reset'),
+    t('Sort by'),
+    t('Asc'),
+    t('Desc'),
+    t('Indholdselement referencing products from field_product'),
+    t('Produkt-ID'),
+    t('SKU'),
+    t('Titel'),
+    t('Redigeringslinks'),
+    t('Page'),
+    t('Antal elementer'),
+    t('- Alle -'),
+    t('Forskydning'),
+    t('« første'),
+    t('‹ forrige'),
+    t('næste ›'),
+    t('sidste »'),
+    t('Variation Title'),
+    t('Lager'),
+  );
+  $export['stock'] = $view;
 
   return $export;
 }
